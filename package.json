@@ -1,0 +1,23 @@
+{
+  "name": "hopenasruas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-css": "sass scss/style.scss css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuilhermeRNS/hopenasruas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GuilhermeRNS/hopenasruas/issues"
+  },
+  "homepage": "https://github.com/GuilhermeRNS/hopenasruas#readme",
+  "devDependencies": {
+    "sass": "^1.83.4"
+  }
+}
