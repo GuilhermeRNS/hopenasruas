@@ -21,6 +21,8 @@ $quarternary: #d2f5db;
           border-radius: $radius;
 }
 
+html { scroll-behavior: smooth; }
+
 @mixin transition($transition) {
     -moz-transition:    all $transition ease;
     -o-transition:      all $transition ease;
