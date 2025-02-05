@@ -105,7 +105,7 @@
                     <div class="text">
                         <h3 class="mb-4">+HOPE Apoiador</h3>
                         <p>Entre para a comunidade de pessoas que querem tornar o mundo um lugar com mais esperança.</p>
-                        <p><a href="#" class="btn btn-white px-3 py-2 mt-2">Doe Agora</a></p>
+                        <div id="paypal-button-container" class="mt-2"></div> <!-- PayPal button container -->
                     </div>
                 </div>
             </div>
@@ -121,6 +121,26 @@
         </div>
     </div>
 </section>
+
+<script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+<script>
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '10.00'  // Replace with your desired donation amount
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                alert('Thank you for your donation, ' + details.payer.name.given_name + '!');
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
 
 <section class="ftco-section">
     <div class="container">
