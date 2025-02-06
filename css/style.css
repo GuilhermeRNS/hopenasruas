@@ -8400,6 +8400,11 @@ h1, h2, h3, h4, h5,
   background: #77e092;
   color: #fff;
 }
+.btn.btn-secondary.btn-outline-secondary:focus, .btn.btn-secondary.btn-outline-secondary.active {
+  background: #77e092;
+  color: #fff;
+  border: 1px solid transparent;
+}
 .btn.btn-white {
   background: #fff;
   border: 1px solid #fff;
@@ -8606,6 +8611,13 @@ h1, h2, h3, h4, h5,
   height: inherit !important;
 }
 
+.donation-form .form-control {
+  color: rgb(127.5, 127.5, 127.5);
+}
+.donation-form .h3 {
+  color: rgb(127.5, 127.5, 127.5);
+}
+
 .gallery {
   width: 25%;
   position: relative;
@@ -8685,8 +8697,7 @@ h1, h2, h3, h4, h5,
 }
 .staff .info span.position {
   display: block;
-  margin-bottom: 15px;
-  font-size: 14px;
+  font-size: 18px;
 }
 .staff .img {
   width: 110px;
