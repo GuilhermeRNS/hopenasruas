@@ -142,8 +142,7 @@
                     <div class="icon d-flex mb-3"><span class="flaticon-charity"></span></div>
                     <div class="media-body pl-4">
                         <h3 class="heading">Torne-se um Voluntário</h3>
-                        <p>Se você tem interesse em fazer parte do nosso time, seja para um unico evento ou seja de forma mais recorrente,
-                            se inscreva para que possamos melhorar o mundo juntos!</p>
+                        <p>Se você tem interesse em fazer parte do nosso time, seja para um unico evento ou seja de forma mais recorrente, se inscreva para que possamos melhorar o mundo juntos!</p>
                     </div>
                 </div>
             </div>
@@ -676,10 +675,30 @@
     </div>
 </section>
 
-<script src="https://www.paypal.com/sdk/js?client-id=test&currency=BRL"></script>
+<!--<script src="https://www.paypal.com/sdk/js?client-id=test&currency=BRL"></script>-->
+<script src="https://sandbox.paypal.com/sdk/js?client-id=AXezidKDTEDBvWgzrZ7HYDSjkjWp2MPbuYLUNh6zB8vwAZKpgtcabMitCOS1Ymk8Rl7L-03Xps-KvuiS&buyer-country=BR&currency=BRL&locale=pt_BR"></script>
 <script>
     let selectedAmount = 25;
     let isRecurring = false;
+
+    document.querySelectorAll('.donation-amount').forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove the active class from all buttons
+            document.querySelectorAll('.donation-amount').forEach(btn => btn.classList.remove('active'));
+
+            // Add the active class to the clicked button
+            this.classList.add('active');
+
+            // Clear the custom amount input
+            document.getElementById('customAmount').value = '';
+        });
+    });
+
+    document.getElementById('customAmount').addEventListener('input', function() {
+        // Remove the active class from all buttons when typing in custom amount
+        document.querySelectorAll('.donation-amount').forEach(button => button.classList.remove('active'));
+    });
+
 
     function updatePayPalButton() {
         document.getElementById('paypal-donation-button').innerHTML = '';

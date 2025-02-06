@@ -517,6 +517,11 @@ h1, h2, h3, h4, h5,
 				background: $secondary;
 				color :$white;
 			}
+			&:focus, &.active {
+				background: $secondary;
+				color: $white;
+				border: 1px solid transparent;
+			}
 		}
 	}
 	&.btn-white {
