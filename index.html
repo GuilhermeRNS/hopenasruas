@@ -640,18 +640,18 @@
             </div>
             <div class="col-md-6 volunteer pl-md-5 ftco-animate">
                 <h3 class="mb-3">Seja um voluntário</h3>
-                <form action="#" class="volunter-form">
+                <form  class="volunter-form" id="my-volunteer-form">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Seu Nome" id="name" required>
+                        <input type="text" class="form-control" placeholder="Seu Nome" name="name" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Seu Email" id="email" required>
+                        <input type="text" class="form-control" placeholder="Seu Email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Seu Telefone" id="phone" required>
+                        <input type="number" class="form-control" placeholder="Seu Telefone" name="phone" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Data de Nascimento" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                        <input type="text" class="form-control" placeholder="Data de Nascimento" onfocus="(this.type='date')" onfocusout="(this.type='text')" name="birth">
                     </div>
                     <div class="form-check mb-4">
                         <input type="checkbox" class="form-check-input" id="consent" required>
@@ -660,13 +660,48 @@
                         </label>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Enviar Inscrição" class="btn btn-white py-3 px-5">
+                        <input type="submit" id="submit-volunteer" value="Enviar Inscrição" class="btn btn-white py-3 px-5">
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </section>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script type="text/javascript">
+    (function(){
+        emailjs.init({
+            publicKey: 'wscCyHohwjObBqmwT',
+            // Do not allow headless browsers
+            blockHeadless: true,
+            limitRate: {
+                // Allow 1 request per 10s
+                throttle: 10000,
+            },
+        });
+
+        // Select the volunteer form by its ID
+        const volunteerForm = document.getElementById('my-volunteer-form');
+
+        // Listen for the form's submit event
+        volunteerForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            console.log('submit-volunteer');
+
+            // Call emailjs.sendForm with the form element
+            emailjs.sendForm('service_zb2muoq', 'template_us1114t', volunteerForm)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    // Optionally, you might want to reset the form or display a success message here.
+                })
+                .catch(function(error) {
+                    console.log('FAILED...', error);
+                    // Optionally, display an error message to the user.
+                });
+        });
+    })();
+</script>
 
 <section id="donation-form" class="ftco-section-3">
     <div class="container">
