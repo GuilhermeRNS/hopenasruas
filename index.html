@@ -648,10 +648,13 @@
                         <input type="text" class="form-control" placeholder="Seu Email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Seu Telefone" name="phone" required>
+                        <input type="number" class="form-control" placeholder="Seu Telefone" name="phone" id="phone" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Data de Nascimento" onfocus="(this.type='date')" onfocusout="(this.type='text')" name="birth">
+                        <input type="text" class="form-control" placeholder="Data de Nascimento" onfocus="(this.type='date')" onblur="(!this.value ? this.type='text' : '')" name="birth">
+                    </div>
+                    <div class="form-group big-message">
+                        <textarea type="text" class="form-control" placeholder="Deixe uma Mensagem" name="message"></textarea>
                     </div>
                     <div class="form-check mb-4">
                         <input type="checkbox" class="form-check-input" id="consent" required>
@@ -701,6 +704,24 @@
                 });
         });
     })();
+</script>
+
+<script>
+    const phone = document.getElementById('phone');
+    const maxDigits = 12;
+
+    phone.addEventListener('input', function () {
+        // Remove any non-digit characters (in case)
+        let value = this.value
+
+        if (value.length > maxDigits) {
+            // Limit the value to maxDigits characters
+            value = value.slice(0, maxDigits);
+            console.log("maxed");
+        }
+        // Update the input's value
+        this.value = value;
+    });
 </script>
 
 <section id="donation-form" class="ftco-section-3">

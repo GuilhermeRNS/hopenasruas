@@ -8579,7 +8579,7 @@ h1, h2, h3, h4, h5,
   }
 }
 
-.volunteer h3 {
+.volunteer .h3 {
   color: #fff;
 }
 
@@ -8609,6 +8609,9 @@ h1, h2, h3, h4, h5,
 }
 .volunter-form textarea.form-control {
   height: inherit !important;
+}
+.volunter-form .big-message {
+  height: 150px;
 }
 
 .donation-form .form-control {
