@@ -690,8 +690,9 @@
         // Listen for the form's submit event
         volunteerForm.addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent default form submission
+            alert('Obrigado! Sua inscrição foi enviada com sucesso.');
             console.log('submit-volunteer');
-
+            event.target.reset();
             // Call emailjs.sendForm with the form element
             emailjs.sendForm('service_zb2muoq', 'template_us1114t', volunteerForm)
                 .then(function(response) {
