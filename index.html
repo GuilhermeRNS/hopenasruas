@@ -773,14 +773,32 @@
                     <div class="tab-content" id="donationTabsContent">
                         <div class="tab-pane fade show active" id="subscription" role="tabpanel"
                             aria-labelledby="subscription-tab">
-                            <label class="mt-4">Doe um valor todo mês para continuar fazendo a diferença</label>
-                            <form action="#" class="donation-form">
-                                <div id="paypal-one-time-button" class="form-group mt-4"></div>
-                                <!-- PayPal button container for one-time payment -->
+                            <label class="mt-4">Seja um apoiador <b>MENSAL</b> para fazer a diferença sempre!</label>
+                            <form action="#" class="donation-form mt-4">
+                                <div class="form-group">
+                                    <div class="d-flex flex-wrap">
+                                        <button type="button"
+                                            class="btn btn-outline-secondary donation-amount mr-2 mb-2"
+                                            data-value="30">R$30</button>
+                                        <button type="button"
+                                            class="btn btn-outline-secondary donation-amount mr-2 mb-2"
+                                            data-value="40">R$40</button>
+                                        <button type="button"
+                                            class="btn btn-outline-secondary donation-amount mr-2 mb-2"
+                                            data-value="50">R$50</button>
+                                        <button type="button"
+                                            class="btn btn-outline-secondary donation-amount mr-2 mb-2"
+                                            data-value="100">R$100</button>
+                                        <button type="button" class="btn btn-outline-secondary donation-amount mb-2"
+                                            data-value="200">R$200</button>
+                                    </div>
+                                </div>
+                                <div id="paypal-subscription-button" class="form-group mt-4"></div>
+                                <!-- PayPal button container for subscription -->
                             </form>
                         </div>
                         <div class="tab-pane fade" id="one-time" role="tabpanel" aria-labelledby="one-time-tab">
-                            <form action="#" class="donation-form mt-4" >
+                            <form action="#" class="donation-form mt-4">
                                 <div class="form-group">
                                     <div class="d-flex flex-wrap">
                                         <button type="button"
@@ -803,8 +821,8 @@
                                     <input type="number" class="form-control" id="customAmount"
                                         placeholder="Ou insira o valor de sua escolha">
                                 </div>
-                                <div id="paypal-subscription-button" class="form-group mt-4"></div>
-                                <!-- PayPal button container for subscription -->
+                                <div id="paypal-one-time-button" class="form-group mt-4"></div>
+                                <!-- PayPal button container for one-time payment -->
                             </form>
                         </div>
                     </div>
@@ -818,29 +836,19 @@
         </div>
     </section>
 
-    <script
-        src="https://sandbox.paypal.com/sdk/js?client-id=AXezidKDTEDBvWgzrZ7HYDSjkjWp2MPbuYLUNh6zB8vwAZKpgtcabMitCOS1Ymk8Rl7L-03Xps-KvuiS&currency=BRL&locale=pt_BR&vault=true&intent=subscription"></script>
-    <script
-        src="https://sandbox.paypal.com/sdk/js?client-id=AXezidKDTEDBvWgzrZ7HYDSjkjWp2MPbuYLUNh6zB8vwAZKpgtcabMitCOS1Ymk8Rl7L-03Xps-KvuiS&currency=BRL&locale=pt_BR"></script>
-
     <script>
-        let selectedAmount = 25;
+        let selectedAmountSubscription = 0;
+        let selectedAmount = 0;
 
         document.querySelectorAll('.donation-amount').forEach(button => {
             button.addEventListener('click', function () {
-                // Remove the active class from all buttons
                 document.querySelectorAll('.donation-amount').forEach(btn => btn.classList.remove('active'));
-
-                // Add the active class to the clicked button
                 this.classList.add('active');
-
-                // Clear the custom amount input
                 document.getElementById('customAmount').value = '';
             });
         });
 
         document.getElementById('customAmount').addEventListener('input', function () {
-            // Remove the active class from all buttons when typing in custom amount
             document.querySelectorAll('.donation-amount').forEach(button => button.classList.remove('active'));
         });
 
@@ -889,20 +897,41 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function updatePayPalButtons() {
-            // Subscription button
+        function loadPayPalScript(isSubscription) {
+            const existingScript = document.querySelector('script[src*="paypal.com/sdk/js"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+
+            const script = document.createElement('script');
+            script.src = isSubscription
+                ? "https://sandbox.paypal.com/sdk/js?client-id=AXezidKDTEDBvWgzrZ7HYDSjkjWp2MPbuYLUNh6zB8vwAZKpgtcabMitCOS1Ymk8Rl7L-03Xps-KvuiS&currency=BRL&locale=pt_BR&vault=true&intent=subscription"
+                : "https://sandbox.paypal.com/sdk/js?client-id=AXezidKDTEDBvWgzrZ7HYDSjkjWp2MPbuYLUNh6zB8vwAZKpgtcabMitCOS1Ymk8Rl7L-03Xps-KvuiS&currency=BRL&locale=pt_BR";
+            script.onload = isSubscription ? updateSubscriptionButtons : updateOneTimeButtons;
+            document.head.appendChild(script);
+        }
+
+        function updateSubscriptionButtons() {
+            document.getElementById('paypal-subscription-button').innerHTML = '';
             paypal.Buttons({
                 createSubscription: function (data, actions) {
+                    if (selectedAmountSubscription <= 0) {
+                        alert('Por favor, selecione um valor válido.');
+                        return;
+                    }
                     return actions.subscription.create({
-                        plan_id: 'P-56U386720F6094712M6ZAWWI' // Replace with your plan ID
+                        plan_id: 'P-0UK58967EV785763AM6ZBIKY', // Replace with your plan ID
+                        quantity: selectedAmountSubscription // Each product = R$1
                     });
                 },
                 onApprove: function (data, actions) {
                     showCustomDialog();
                 }
             }).render('#paypal-subscription-button');
+        }
 
-            // One-time payment button
+        function updateOneTimeButtons() {
+            document.getElementById('paypal-one-time-button').innerHTML = '';
             paypal.Buttons({
                 createOrder: function (data, actions) {
                     if (selectedAmount <= 0) {
@@ -926,29 +955,38 @@
                     });
                 },
                 onApprove: function (data, actions) {
-                    return actions.order.capture().then(function (details) {
-                        showCustomDialog();
-                    }).catch(function (error) {
-                        console.error('Error capturing order:', error);
-                    });
+                    return actions.order.capture()
+                        .then(function (details) {
+                            showCustomDialog();
+                        })
+                        .catch(function (error) {
+                            console.error('Error capturing order:', error);
+                        });
                 }
             }).render('#paypal-one-time-button');
         }
 
-        document.querySelectorAll('.donation-amount').forEach(button => {
+        document.querySelectorAll('#subscription .donation-amount').forEach(button => {
+            button.addEventListener('click', function () {
+                selectedAmountSubscription = parseFloat(this.dataset.value);
+                loadPayPalScript(true);
+            });
+        });
+
+        document.querySelectorAll('#one-time .donation-amount').forEach(button => {
             button.addEventListener('click', function () {
                 selectedAmount = parseFloat(this.dataset.value);
                 document.getElementById('customAmount').value = '';
-                updatePayPalButtons();
+                loadPayPalScript(false);
             });
         });
 
         document.getElementById('customAmount').addEventListener('input', function () {
             selectedAmount = parseFloat(this.value) || 0;
-            updatePayPalButtons();
+            loadPayPalScript(false);
         });
 
-        updatePayPalButtons();
+        loadPayPalScript(true);
     </script>
 
     <footer class="ftco-footer ftco-section img">
