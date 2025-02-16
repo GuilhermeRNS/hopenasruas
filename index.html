@@ -718,7 +718,6 @@
         if (value.length > maxDigits) {
             // Limit the value to maxDigits characters
             value = value.slice(0, maxDigits);
-            console.log("maxed");
         }
         // Update the input's value
         this.value = value;
@@ -784,6 +783,50 @@
         document.querySelectorAll('.donation-amount').forEach(button => button.classList.remove('active'));
     });
 
+    function showCustomDialog() {
+        const dialog = document.createElement('div');
+        dialog.style.position = 'fixed';
+        dialog.style.top = '50%';
+        dialog.style.left = '50%';
+        dialog.style.transform = 'translate(-50%, -50%)';
+        dialog.style.backgroundColor = 'white';
+        dialog.style.padding = '40px';
+        dialog.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.2)';
+        dialog.style.textAlign = 'center';
+        dialog.style.borderRadius = '20px';
+        dialog.style.width = '80%';
+        dialog.style.maxWidth = '600px';
+
+        const image = document.createElement('img');
+        image.src = 'images/wpp10.jpeg';
+        image.style.width = '150px';
+        image.style.height = '150px';
+        image.style.borderRadius = '50%';
+        image.style.marginBottom = '30px';
+
+        const checkIcon = document.createElement('div');
+        checkIcon.innerHTML = '&#10004;';
+        checkIcon.style.fontSize = '70px';
+        checkIcon.style.color = 'green';
+        checkIcon.style.marginBottom = '30px';
+
+        const message = document.createElement('p');
+        message.textContent = 'a +HOPENASRUAS agradece a sua doação!';
+        message.style.fontSize = '24px';
+        message.style.fontWeight = 'bold';
+
+        dialog.appendChild(image);
+        dialog.appendChild(checkIcon);
+        dialog.appendChild(message);
+
+        document.body.appendChild(dialog);
+
+        setTimeout(() => {
+            dialog.remove();
+        }, 5000);
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     function updatePayPalButton() {
         document.getElementById('paypal-donation-button').innerHTML = '';
@@ -796,19 +839,21 @@
 
                 let purchaseUnit = {
                     amount: {
-                        value: selectedAmount.toFixed(2)
+                        value: selectedAmount.toFixed(2),
+                        currency_code: "BRL"
                     },
                     description: isRecurring ? 'Doação mensal para Hope+ Nas Ruas' : 'Doação única para Hope+ Nas Ruas'
                 };
 
                 return actions.order.create({
-                    purchase_units: [purchaseUnit]
+                    purchase_units: [purchaseUnit],
+                    application_context: {
+                        shipping_preference: 'NO_SHIPPING' // Disable shipping address
+                    }
                 });
             },
             onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    alert('Obrigado pela sua doação, ' + details.payer.name.given_name + '!');
-                });
+                showCustomDialog();
             }
         }).render('#paypal-donation-button');
     }
