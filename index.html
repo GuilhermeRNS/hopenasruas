@@ -35,6 +35,7 @@
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CR7DZKKZ"></script>
+    <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -61,7 +62,7 @@
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="#donation-form" class="nav-link">+HOPE Apoiador</a></li>
+                    <li class="nav-item"><button type="button" id="donate-button-header" class="nav-link donate-button">Doe Agora</button></li>
                     <li class="nav-item"><a href="#contact-info" class="nav-link">Contato</a></li>
                     <ul class="ftco-footer-social list-unstyled float-md-left ml-3">
                         <li class="ftco-animate"><a target="_blank" href="https://instagram.com/hopenasruas"><span
@@ -120,7 +121,7 @@
                             <h3 class="mb-4">+HOPE Apoiador</h3>
                             <p>Entre para a comunidade de pessoas que querem tornar o mundo um lugar com mais esperança.
                             </p>
-                            <p><a href="#donation-form" class="btn btn-white px-3 py-2 mt-2">Doe Agora</a></p>
+                            <p><button type="button" id="donate-button" class="donate-button btn btn-white px-3 py-2 mt-2">Doe Agora</button></p>
                         </div>
                     </div>
                 </div>
@@ -754,239 +755,24 @@
         });
     </script>
 
-    <section id="donation-form" class="ftco-section-3">
-        <div class="container">
-            <div class="row d-md-flex">
-                <div class="col-md-6 pr-md-5 ftco-animate">
-                    <h3 class="mb-3">Faça sua Doação</h3>
-                    <p>Ajude a apoiar nossa causa fazendo uma doação. Cada contribuição faz a diferença!</p>
-                    <ul class="nav nav-tabs" id="donationTabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="subscription-tab" data-toggle="tab" href="#subscription"
-                                role="tab" aria-controls="subscription" aria-selected="true">+HOPE Apoiador</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="one-time-tab" data-toggle="tab" href="#one-time" role="tab"
-                                aria-controls="one-time" aria-selected="false">Doação Única</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="donationTabsContent">
-                        <div class="tab-pane fade show active" id="subscription" role="tabpanel"
-                            aria-labelledby="subscription-tab">
-                            <label class="mt-4">Seja um apoiador <b>MENSAL</b> para fazer a diferença sempre!</label>
-                            <form action="#" class="donation-form mt-4">
-                                <div class="form-group">
-                                    <div class="d-flex flex-wrap">
-                                        <button type="button"
-                                            class="btn btn-outline-secondary donation-amount mr-2 mb-2"
-                                            data-value="30">R$30</button>
-                                        <button type="button"
-                                            class="btn btn-outline-secondary donation-amount mr-2 mb-2"
-                                            data-value="40">R$40</button>
-                                        <button type="button"
-                                            class="btn btn-outline-secondary donation-amount mr-2 mb-2"
-                                            data-value="50">R$50</button>
-                                        <button type="button"
-                                            class="btn btn-outline-secondary donation-amount mr-2 mb-2"
-                                            data-value="100">R$100</button>
-                                        <button type="button" class="btn btn-outline-secondary donation-amount mb-2"
-                                            data-value="200">R$200</button>
-                                    </div>
-                                </div>
-                                <div id="paypal-subscription-button" class="form-group mt-4"></div>
-                                <!-- PayPal button container for subscription -->
-                            </form>
-                        </div>
-                        <div class="tab-pane fade" id="one-time" role="tabpanel" aria-labelledby="one-time-tab">
-                            <form action="#" class="donation-form mt-4">
-                                <div class="form-group">
-                                    <div class="d-flex flex-wrap">
-                                        <button type="button"
-                                            class="btn btn-outline-secondary donation-amount mr-2 mb-2"
-                                            data-value="10">R$10</button>
-                                        <button type="button"
-                                            class="btn btn-outline-secondary donation-amount mr-2 mb-2"
-                                            data-value="25">R$25</button>
-                                        <button type="button"
-                                            class="btn btn-outline-secondary donation-amount mr-2 mb-2"
-                                            data-value="50">R$50</button>
-                                        <button type="button"
-                                            class="btn btn-outline-secondary donation-amount mr-2 mb-2"
-                                            data-value="100">R$100</button>
-                                        <button type="button" class="btn btn-outline-secondary donation-amount mb-2"
-                                            data-value="250">R$250</button>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="number" class="form-control" id="customAmount"
-                                        placeholder="Ou insira o valor de sua escolha">
-                                </div>
-                                <div id="paypal-one-time-button" class="form-group mt-4"></div>
-                                <!-- PayPal button container for one-time payment -->
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 d-flex ftco-animate">
-                    <div class="img img-2 align-self-stretch"
-                        style="background-image: url(images/wpp11.jpeg); background-size: cover; background-position: center;">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <script>
-        let selectedAmountSubscription = 0;
-        let selectedAmount = 0;
-
-        document.querySelectorAll('.donation-amount').forEach(button => {
-            button.addEventListener('click', function () {
-                document.querySelectorAll('.donation-amount').forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                document.getElementById('customAmount').value = '';
-            });
-        });
-
-        document.getElementById('customAmount').addEventListener('input', function () {
-            document.querySelectorAll('.donation-amount').forEach(button => button.classList.remove('active'));
-        });
-
-        function showCustomDialog() {
-            const dialog = document.createElement('div');
-            dialog.style.position = 'fixed';
-            dialog.style.top = '50%';
-            dialog.style.left = '50%';
-            dialog.style.transform = 'translate(-50%, -50%)';
-            dialog.style.backgroundColor = 'white';
-            dialog.style.padding = '40px';
-            dialog.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.2)';
-            dialog.style.textAlign = 'center';
-            dialog.style.borderRadius = '20px';
-            dialog.style.width = '80%';
-            dialog.style.maxWidth = '600px';
-
-            const image = document.createElement('img');
-            image.src = 'images/wpp10.jpeg';
-            image.style.width = '150px';
-            image.style.height = '150px';
-            image.style.borderRadius = '50%';
-            image.style.marginBottom = '30px';
-
-            const checkIcon = document.createElement('div');
-            checkIcon.innerHTML = '&#10004;';
-            checkIcon.style.fontSize = '70px';
-            checkIcon.style.color = 'green';
-            checkIcon.style.marginBottom = '30px';
-
-            const message = document.createElement('p');
-            message.textContent = 'a +HOPENASRUAS agradece a sua doação!';
-            message.style.fontSize = '24px';
-            message.style.fontWeight = 'bold';
-
-            dialog.appendChild(image);
-            dialog.appendChild(checkIcon);
-            dialog.appendChild(message);
-
-            document.body.appendChild(dialog);
-
-            setTimeout(() => {
-                dialog.remove();
-            }, 5000);
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function loadPayPalScript(isSubscription) {
-            const existingScript = document.querySelector('script[src*="paypal.com/sdk/js"]');
-            if (existingScript) {
-                existingScript.remove();
+        PayPal.Donation.Button({
+            env:'production',
+            hosted_button_id:'L3T5NSQEN8BNG',
+            image: {
+                src:'https://www.paypalobjects.com/pt_BR/BR/i/btn/btn_donateCC_LG.gif',
+                alt:'Faça doações com o botão do PayPal',
             }
+        }).render('#donate-button');
 
-            const script = document.createElement('script');
-            script.src = isSubscription
-                ? "https://sandbox.paypal.com/sdk/js?client-id=AXezidKDTEDBvWgzrZ7HYDSjkjWp2MPbuYLUNh6zB8vwAZKpgtcabMitCOS1Ymk8Rl7L-03Xps-KvuiS&currency=BRL&locale=pt_BR&vault=true&intent=subscription"
-                : "https://sandbox.paypal.com/sdk/js?client-id=AXezidKDTEDBvWgzrZ7HYDSjkjWp2MPbuYLUNh6zB8vwAZKpgtcabMitCOS1Ymk8Rl7L-03Xps-KvuiS&currency=BRL&locale=pt_BR";
-            script.onload = isSubscription ? updateSubscriptionButtons : updateOneTimeButtons;
-            document.head.appendChild(script);
-        }
-
-        function updateSubscriptionButtons() {
-            document.getElementById('paypal-subscription-button').innerHTML = '';
-            paypal.Buttons({
-                createSubscription: function (data, actions) {
-                    if (selectedAmountSubscription <= 0) {
-                        alert('Por favor, selecione um valor válido.');
-                        return;
-                    }
-                    return actions.subscription.create({
-                        plan_id: 'P-0UK58967EV785763AM6ZBIKY', // Replace with your plan ID
-                        quantity: selectedAmountSubscription // Each product = R$1
-                    });
-                },
-                onApprove: function (data, actions) {
-                    showCustomDialog();
-                }
-            }).render('#paypal-subscription-button');
-        }
-
-        function updateOneTimeButtons() {
-            document.getElementById('paypal-one-time-button').innerHTML = '';
-            paypal.Buttons({
-                createOrder: function (data, actions) {
-                    if (selectedAmount <= 0) {
-                        alert('Por favor, selecione ou insira um valor válido.');
-                        return;
-                    }
-
-                    let purchaseUnit = {
-                        amount: {
-                            value: selectedAmount.toFixed(2),
-                            currency_code: "BRL"
-                        },
-                        description: 'Doação única para Hope+ Nas Ruas'
-                    };
-
-                    return actions.order.create({
-                        purchase_units: [purchaseUnit],
-                        application_context: {
-                            shipping_preference: 'NO_SHIPPING' // Disable shipping address
-                        }
-                    });
-                },
-                onApprove: function (data, actions) {
-                    return actions.order.capture()
-                        .then(function (details) {
-                            showCustomDialog();
-                        })
-                        .catch(function (error) {
-                            console.error('Error capturing order:', error);
-                        });
-                }
-            }).render('#paypal-one-time-button');
-        }
-
-        document.querySelectorAll('#subscription .donation-amount').forEach(button => {
-            button.addEventListener('click', function () {
-                selectedAmountSubscription = parseFloat(this.dataset.value);
-                loadPayPalScript(true);
-            });
-        });
-
-        document.querySelectorAll('#one-time .donation-amount').forEach(button => {
-            button.addEventListener('click', function () {
-                selectedAmount = parseFloat(this.dataset.value);
-                document.getElementById('customAmount').value = '';
-                loadPayPalScript(false);
-            });
-        });
-
-        document.getElementById('customAmount').addEventListener('input', function () {
-            selectedAmount = parseFloat(this.value) || 0;
-            loadPayPalScript(false);
-        });
-
-        loadPayPalScript(true);
+        PayPal.Donation.Button({
+            env:'production',
+            hosted_button_id:'L3T5NSQEN8BNG',
+            image: {
+                src:'https://www.paypalobjects.com/pt_BR/BR/i/btn/btn_donateCC_LG.gif',
+                alt:'Faça doações com o botão do PayPal',
+            }
+        }).render('#donate-button-header');
     </script>
 
     <footer class="ftco-footer ftco-section img">
