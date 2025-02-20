@@ -47,7 +47,32 @@
 
         gtag('config', 'G-D2CR7DZKKZ');
     </script>
+
+    <script>
+        // Utility function to get query parameters from URL
+        function getQueryParameter(name) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(window.location.href);
+            if (!results || !results[2]) return null;
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        let donationStatus = getQueryParameter('donation_callback');
+        if (donationStatus === 'completed' || donationStatus === 'cancelled') {
+            // Retrieve the donationId from sessionStorage (or from the URL if you passed it)
+            let eventName = donationStatus === 'completed' ? 'donation_flow_completed' : 'donation_flow_cancelled';
+
+            gtag('event', eventName, {
+                'event_category': 'donation',
+                'event_label': donationStatus === 'completed' ? 'Donation Callback Completed' : 'Donation Callback Cancelled',
+            });
+        }
+    </script>
 </head>
+
+
+
 
 <body>
 
