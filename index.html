@@ -883,6 +883,63 @@
         </svg>
     </div>
 
+    <script>
+        PayPal.Donation.Button({
+            env: 'production',
+            hosted_button_id: 'JESBCDXMDMUJQ',
+            image: {
+                src: 'https://www.paypalobjects.com/pt_BR/BR/i/btn/btn_donateCC_LG.gif',
+                alt: 'Faça doações com o botão do PayPal',
+            }
+        }).render('#donate-button');
+
+        PayPal.Donation.Button({
+            env: 'production',
+            hosted_button_id: 'JESBCDXMDMUJQ',
+            image: {
+                src: 'https://www.paypalobjects.com/pt_BR/BR/i/btn/btn_donateCC_LG.gif',
+                alt: 'Faça doações pelo PayPal',
+            }
+        }).render('#donate-header');
+    </script>
+
+    <!-- New script to attach analytics tracking for donation buttons and the Instagram link -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let donateBottom = document.getElementById('donate-button');
+            let donateHeader = document.getElementById('donate-header');
+            let instagramLink = document.getElementById('instagram-link');
+
+            if (donateBottom) {
+                donateBottom.addEventListener('click', function () {
+                    gtag('event', 'donation_click_page', {
+                        'event_category': 'donation',
+                        'event_label': 'Page Donation Button'
+                    });
+                });
+            }
+
+            if (donateHeader) {
+                donateHeader.addEventListener('click', function () {
+                    gtag('event', 'donation_click_header', {
+                        'event_category': 'donation',
+                        'event_label': 'Header Donation Button'
+                    });
+                });
+            }
+
+            if (instagramLink) {
+                instagramLink.addEventListener('click', function () {
+                    gtag('event', 'instagram_click', {
+                        'event_category': 'social',
+                        'event_label': 'Instagram Link'
+                    });
+                });
+            }
+        });
+    </script>
+
+
 
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>
