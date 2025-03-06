@@ -37,54 +37,44 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CR7DZKKZ"></script>
     <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGT8N90PE">
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-
-        gtag('config', 'G-RSGT8N90PE');
-    </script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16893025331">
-    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGT8N90PE"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'AW-16893025331');
+        gtag('config', 'G-RSGT8N90PE');
     </script>
 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16893025331"></script>
     <script>
-        // Utility function to get query parameters from URL
-        function getQueryParameter(name) {
-            name = name.replace(/[\[\]]/g, '\\$&');
-            let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(window.location.href);
-            if (!results || !results[2]) return null;
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
-
-        let donationStatus = getQueryParameter('donation_callback');
-        if (donationStatus === 'completed' || donationStatus === 'cancelled') {
-            // Retrieve the donationId from sessionStorage (or from the URL if you passed it)
-            let eventName = donationStatus === 'completed' ? 'donation_flow_completed' : 'donation_flow_cancelled';
-
-            gtag('event', eventName, {
-                'event_category': 'donation',
-                'event_label': donationStatus === 'completed' ? 'Donation Callback Completed' : 'Donation Callback Cancelled',
-            });
-        }
+        gtag('config', 'AW-16893025331');
     </script>
     <!-- Google tag (gtag.js) -->
 </head>
 
 
 <body>
+<script>
+    // Utility function to get query parameters from URL
+    function getQueryParameter(name) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(window.location.href);
+        if (!results || !results[2]) return null;
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    let donationStatus = getQueryParameter('donation_callback');
+    if (donationStatus === 'completed' || donationStatus === 'cancelled') {
+        let eventName = donationStatus === 'completed' ? 'donation_flow_completed' : 'donation_flow_cancelled';
+
+        gtag('event', eventName, {
+            'event_category': 'donation',
+            'event_label': donationStatus === 'completed' ? 'Donation Callback Completed' : 'Donation Callback Cancelled',
+        });
+    }
+</script>
 
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
