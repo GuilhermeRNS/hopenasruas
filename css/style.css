@@ -8545,6 +8545,13 @@ h1, h2, h3, h4, h5,
 .cause-entry span.fund-raised {
   color: #000;
 }
+.cause-entry.cause-entry-no-background {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+}
 
 .ftco-section-3 {
   padding: 8em 0;

@@ -659,6 +659,17 @@ h1, h2, h3, h4, h5,
 	span.fund-raised{
 		color: $black;
 	}
+	&.cause-entry-no-background {
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+		-webkit-box-shadow: none !important;
+		-moz-box-shadow: none !important;
+	}
+}
+
+.cause-entry-no-background{
+
 }
 
 //ABOUT VIDEO
